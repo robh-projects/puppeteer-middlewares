@@ -1,0 +1,60 @@
+{{
+    match: {
+        operator: 'OR',
+        rules: [
+            {
+                value: '\.jpg|\.png',
+                type: 'URL_REGEXP'
+            }
+        ]
+    },
+    proxy: 'http://cheap_proxy'
+
+    retryWith: {
+        conditions: [{...}],
+        retryWith: {}
+    }
+
+},
+{
+    conditions: [
+         URL = 'https://google.com',
+    ]
+    
+    retryRules: [
+        {
+            conditions: [status 500],
+            // If requests to https://google.com failed, we will switch to an expensive proxy
+            // Note that for this rule to trigger, URL must be 'https://google.com' and 
+            proxy: cheapProxy
+            retryRules: {
+
+            }
+        },
+        {
+            conditions: [status]
+        }
+    ]
+
+},
+{
+    conditions: undefined,
+    [
+        // Each item defines a retry condition and what to do
+        {
+            match: {values: [500, 503], type: 'RESPONSE_STATUS_CODE}: 
+            proxy: 'http://expensive_proxy'
+        },
+        // If status code is different than 500 or 503, 'blocked' will be checked in the body
+        {
+            match: {values: ['blocked'], type: 'RESPONSE_BODY'},
+            block: true,
+        },
+
+        {
+            match: {values: ['200', '503']}
+        }
+    ]
+},
+
+}
