@@ -11,5 +11,7 @@ A library that provides rule-based middlewares for Puppetteer page events.
   cd puppetteer-middlewares
   npm install && npm run build
   ```
+  
+---
 ## Request Middleware
 ...
