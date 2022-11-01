@@ -16,9 +16,9 @@ A library that provides rule-based middlewares for Puppetteer page events.
 ## Request Middleware
 
 
-Quick-run:
+### ⚡ Usage
 
-
+```
 const puppeteer = require('puppeteer');
 import {RequestMiddleware} from './src/Request/Middleware';
 import { ConditionRuleMatchType } from './src/Request/Rule/types';
@@ -50,3 +50,4 @@ import { ConditionRuleMatchType } from './src/Request/Rule/types';
     }
 )();
 
+```
