@@ -24,7 +24,7 @@ export class HTTPNetworking {
         
         /**
          * Fires a request using any method of choice
-         * Returns a response to be used in Puppetteer's HTTPRequest.respond()
+         * Returns a response to be used in Puppeteer's HTTPRequest.respond()
          */
 
 

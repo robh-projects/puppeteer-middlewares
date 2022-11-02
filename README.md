@@ -1,5 +1,5 @@
-# Puppetteer Middlewares
-A library that currently implements rule-based Request Middlewares for Puppetteer page events.
+# Puppeteer Middlewares
+A library that currently implements rule-based Request Middlewares for Puppeteer page events.
 
 You can conditionally proxify, block, retry, or just override request options!
 
@@ -9,8 +9,8 @@ You can conditionally proxify, block, retry, or just override request options!
   ```npm i @teocns/puppeteer-middlewares```
 - #### From source
   ```
-  git clone https://github.com/teocns/puppetteer-middlewares/
-  cd puppetteer-middlewares
+  git clone https://github.com/teocns/puppeteer-middlewares/
+  cd puppeteer-middlewares
   npm install && npm run build
   ```
 ### Running tests

@@ -8,7 +8,7 @@ import {jest} from '@jest/globals';
 
 
 /**
- * Mocks HTTPRequest from library "puppetteer"
+ * Mocks HTTPRequest from library "puppeteer"
  */
 const mockHTTPRequest = () => {
     jest.mock(
