@@ -5,7 +5,7 @@ You can conditionally proxify, block, retry, or just override request options!
 
 ### Installation 
 
-- #### Using NPM (coming soon)
+- #### Using NPM
   ```npm i puppetteer-middlewares```
 - #### From source
   ```
