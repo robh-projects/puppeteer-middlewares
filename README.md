@@ -1,5 +1,7 @@
 # Puppetteer Middlewares
-A library that provides rule-based middlewares for Puppetteer page events.
+A library that currently implements rule-based Request Middlewares for Puppetteer page events.
+
+You can conditionally proxify, block, retry, or just override request options!
 
 ### Installation 
 
