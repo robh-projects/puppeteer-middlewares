@@ -25,8 +25,7 @@ You can conditionally proxify, block, retry, or just override request options!
 
 ```
 const puppeteer = require('puppeteer');
-import {RequestMiddleware} from './src/Request/Middleware';
-import { ConditionRuleMatchType } from './src/Request/Rule/types';
+const { RequestMiddleware, ConditionRuleMatchType } = require('@teocns/puppeteer-middlewares');
 
 (
     async () => {
