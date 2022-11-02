@@ -11,7 +11,10 @@ A library that provides rule-based middlewares for Puppetteer page events.
   cd puppetteer-middlewares
   npm install && npm run build
   ```
-  
+### Running tests
+
+  - `npm run test` makes use of Jest to run all tests placed under `/test`
+
 ---
 ## Request Middleware
 
