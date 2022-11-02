@@ -35,5 +35,5 @@
     "exclude": ["dist", "node_modules", "test","demo"],
     "include": [
         "src/**/*"
-, "Rule"    ],
+    ]
 }
