@@ -1,6 +1,6 @@
 {
   "name": "@teocns/puppeteer-middlewares",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A collection of middlewares for Puppeteer PageEvent",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
