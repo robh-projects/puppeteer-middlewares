@@ -12,43 +12,29 @@ export class HTTPEventHandleProvider{
 
     private resolver: HTTPEventHandleResolver
 
-
-    private current: HTTP_EVENT_HANDLE | undefined;
-
     constructor(
         //protected readonly handleResolver = HTTPEventHandleResolver(event);
         protected readonly event: HTTPEvent
     ){
         this.resolver = new HTTPEventHandleResolver()
-        this.current = undefined;        
 
         this.generator = this.generator.bind(this);
     }
 
-    private getNextHandle = async () => {
-        const self =  this;
-        return new Promise((resolve, reject) => {
-            const onStatusChangedFn =  (previous: HTTP_STATE, current: HTTP_STATE) => {
-                let handle;
-                try{
-                    handle = this.resolver.resolve(self.event)
-                    resolve (handle)
-                }
-                catch (error){
-                    handle = undefined;
-                    return reject(error)
-                }
-                finally{
-                    if (handle === undefined){
-                        self.event.off(HTTP_EVENTS.STATE_CHANGED,onStatusChangedFn)
-                    }
-                }
+    
 
-            };
-            // bootstrap
-            onStatusChangedFn(this.event.state,this.event.state);
-        });
+    private getNextHandle = async () => {
+        // Wait for the next tick
         
+        return new Promise((resolve) => {
+            const handle = () => {
+                resolve(this.resolver.resolve(this.event));
+                this.event.off(HTTP_EVENTS.RULES_APPLIED, handle);
+            }
+            this.event.on(HTTP_EVENTS.RULES_APPLIED, handle)
+        })
+        // await nextTick();
+        // return this.resolver.resolve(this.event);
     }
 
 
@@ -60,3 +46,4 @@ export class HTTPEventHandleProvider{
         }
     }
 }
+

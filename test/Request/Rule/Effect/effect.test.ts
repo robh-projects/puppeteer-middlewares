@@ -96,3 +96,4 @@ describe("Effect registry", () => {
     });
     
 });
+

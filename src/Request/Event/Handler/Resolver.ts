@@ -39,10 +39,10 @@ export class HTTPEventHandleResolver{
                 return HTTP_EVENT_HANDLE.REQUEST;
             case HTTP_STATE.TO_BYPASS:
                 return HTTP_EVENT_HANDLE.CONTINUE;
-            case HTTP_STATE.ERRORED:
+            case HTTP_STATE.REQUEST_ERRORED:
                 if (event.response)
                     return HTTP_EVENT_HANDLE.RESPOND;
-                else
+                else    
                     return HTTP_EVENT_HANDLE.CONTINUE;
             default:
                 return undefined;

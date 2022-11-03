@@ -73,18 +73,21 @@ export class HTTPRuleEffectsCollectionSettersMixin implements IHTTPRuleEffects{
     private _proxy: URLString | undefined | null;
 
     set proxy(value: URLString | undefined | null) {
-        if (value === undefined) return;
-
-        if (value === null){
+        if (value === undefined) 
+            return;
+        else if (value === null){
             this._proxy = undefined;
         }
-        try{
-            new URL(value as string);
+        else{
+            try{
+                new URL(value as string);
+                this._proxy = value;
+            }
+            catch(e){
+                throw new Error(`Invalid proxy URL: ${value}`);
+            }
         }
-        catch(e){
-            throw new Error(`Invalid proxy URL: ${value}`);
-        }
-        this._proxy = value;
+       
     }
 
     get proxy(): URLString | undefined | null {

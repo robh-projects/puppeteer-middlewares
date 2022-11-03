@@ -45,9 +45,9 @@ export class HTTPRequestManager{
         // Watch the event to apply rules on-the-fly
         RulesManager.watch(event);
         
-
+        const handler = new HTTPEventHandleProvider(event);
         // Consume event handles
-        for await (const handle of new HTTPEventHandleProvider(event).generator()){
+        for await (const handle of handler.generator()){
             this.EventHandler.handle(handle,event);
         }
 

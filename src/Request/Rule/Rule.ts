@@ -55,7 +55,7 @@ export class HTTPRule implements IHTTPRule {
     matches (event: HTTPEvent){
         if (!this.conditions){
             if (this instanceof HTTPRetryRule){
-                return event.state === HTTP_STATE.RESPONSE_RECEIVED;
+                return event.state === HTTP_STATE.RESPONSE_RECEIVED || event.state === HTTP_STATE.REQUEST_ERRORED;
             }
             return true;
         }

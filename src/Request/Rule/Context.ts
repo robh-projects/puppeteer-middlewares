@@ -58,7 +58,7 @@ export class HTTPEventRulesContext{
     }
 
     couldRetry = () => {
-        return this.event.state === HTTP_STATE.RESPONSE_RECEIVED;
+        return this.event.state === HTTP_STATE.RESPONSE_RECEIVED || this.event.state === HTTP_STATE.REQUEST_ERRORED;
     }
 
     /**
@@ -84,6 +84,7 @@ export class HTTPEventRulesContext{
                     );
                     break;
                 case HTTP_STATE.RESPONSE_RECEIVED:
+                case HTTP_STATE.REQUEST_ERRORED:
                     this.effects.applySome(
                         event,
                         EFFECTS.PROXY,

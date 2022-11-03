@@ -470,7 +470,7 @@ describe("Test the whole integration", () => {
         const EventHandler: HTTPEventHandler = new HTTPEventHandler();
 
         requestSpy.mockImplementation((...args) => {
-            event.setError(EXCEPTIONS.OVERRIDING_REQUEST,'Managed request');
+            event.setRequestFailed(EXCEPTIONS.OVERRIDING_REQUEST,'Managed request');
         }); 
         
         respondSpy.mockImplementation((...args) => {
@@ -513,6 +513,103 @@ describe("Test the whole integration", () => {
         expect(requestSpy).toBeCalledTimes(1)
         expect(continueSpy).toHaveBeenCalledTimes(1)
         expect(respondSpy).toHaveBeenCalledTimes(0)
+
+        
+
+    });
+      
+    it ("On error, if there is a retry rule, use the retry rule effects, or bypass", async () => {
+        const event = new HTTPEvent(
+            makeHTTPRequest({
+                url(){
+                    return 'https://google.com';
+                }
+            }) as TRequest
+        );
+
+        const handleProvider = new HTTPEventHandleProvider(event); 
+
+        
+
+        
+        const requestSpy = jest.spyOn(HTTPEventHandler.prototype as any,'request');
+        const respondSpy = jest.spyOn(HTTPEventHandler.prototype as any,'respond');
+        const continueSpy = jest.spyOn(HTTPEventHandler.prototype as any,'continue');
+
+        const EventHandler: HTTPEventHandler = new HTTPEventHandler();
+
+
+        
+        respondSpy.mockImplementation((...args) => {
+            
+            event.emit(HTTP_EVENTS.RESPONSE_SENT, event)
+        });
+
+        continueSpy.mockImplementation((...args) => {
+            event.setState(HTTP_STATE.COMPLETED)
+        });
+        
+
+        
+
+        const RulesManager = new HTTPRuleManager(
+            new HTTPRulesCollection(
+                {
+                    conditions: {
+                        match: 'google.com',
+                        type: ConditionRuleMatchType.URL_CONTAINS
+                    },
+                    effects:{
+                        proxy: 'http://localhost:8899'
+                    },
+                    retryRule:{
+                        // An empty retry rulle will match if the request fails for whatever reason
+                        effects:{
+                            proxy: null, // Will remove proxy
+                        }
+                        
+                    }
+                }
+            )
+        );
+
+
+
+       
+
+
+        const calledWithoutProxy = jest.fn();
+        const calledWithProxy = jest.fn();
+
+        requestSpy.mockImplementation((...args) => {
+
+            if (event.options.proxy) {
+                calledWithProxy();
+                event.setRequestFailed(EXCEPTIONS.OVERRIDING_REQUEST,'Managed request');
+            }
+            else{
+                calledWithoutProxy();
+                event.addResponse({
+                    status: 200,
+                })
+            }
+            
+        }); 
+        
+
+        RulesManager.watch(event);
+
+        //@ts-ignore
+        
+        
+
+        for await (const handle of handleProvider.generator()){
+            EventHandler.handle(handle,event);
+        }
+
+        expect(calledWithProxy).toBeCalledTimes(1)
+        expect(continueSpy).toBeCalledTimes(0)
+        expect(calledWithoutProxy).toBeCalledTimes(1)
 
         
 

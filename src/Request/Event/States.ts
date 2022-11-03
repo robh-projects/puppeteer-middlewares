@@ -17,7 +17,7 @@ export enum HTTP_STATE  {
 
 
     // Request failed for whatever reason.
-    ERRORED = 'ERRORED',
+    REQUEST_ERRORED = 'REQUEST_ERRORED',
 
 
     // Dead-end.

@@ -43,8 +43,9 @@ export class HTTPEventBase{
     }
 
     public once(event: HTTP_EVENTS, callable: any){
+        const self = this;
         const callOnce = (...args: any[]) => {
-            this.eventEmitter.off(event,callable);
+            self.eventEmitter.off(event,callable);
             return callable(...args)
         }
         this.eventEmitter.on(event,callOnce)
