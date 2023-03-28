@@ -55,7 +55,7 @@ export class HTTPEventSettersMixin extends HTTPEventBase {
         this.errors.push(
             new HTTPEventException(e,args)
         );
-        console.log(args);
+        console.error(args);
         this.setState(HTTP_STATE.REQUEST_ERRORED);
         this.emit(HTTP_EVENTS.REQUEST_FAILED, this);
     }

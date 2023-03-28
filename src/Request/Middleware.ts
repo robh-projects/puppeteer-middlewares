@@ -36,7 +36,7 @@ export class RequestMiddleware implements IPageEventMiddleware{
             request.continue();
         }
         
-        this.manager.process(
+        await this.manager.process(
             request as TRequest
         );
         

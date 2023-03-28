@@ -5,8 +5,8 @@ import { ConditionRuleMatchType } from './/Request/Rule/types';
 (
     async () => {
         const browser = await puppeteer.launch({
-            
-            headless: true,
+            executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+            headless: false,
         });
         const page = await browser.newPage();
 
@@ -14,29 +14,34 @@ import { ConditionRuleMatchType } from './/Request/Rule/types';
         await page.setDefaultNavigationTimeout(0);
     
         new RequestMiddleware(
+            // {
+            //     conditions: {
+            //         match: 'google.com',
+            //         type: ConditionRuleMatchType.URL_CONTAINS
+            //     },
+            //     effects:{
+            //         proxy: 'http://localhost:8899'
+            //     },
+            //     retryRule:{
+            //         // An empty retry rulle will match if the request fails for whatever reason
+            //         effects:{
+            //             proxy: null, // Will just void the request
+            //         }
+                    
+            //     }
+            // },
             {
                 conditions: {
-                    match: 'google.com',
+                    match: '.png',
                     type: ConditionRuleMatchType.URL_CONTAINS
                 },
                 effects:{
-                    proxy: 'http://localhost:8899'
+                    block: true
                 },
-                retryRule:{
-                    // An empty retry rulle will match if the request fails for whatever reason
-                    effects:{
-                        proxy: null, // Will just void the request
-                    }
-                    
-                }
             }
         ).bind(page);
 
 
-        await page.goto('https://google.com');
-
-        const awaitSleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-        await awaitSleep(10000);
-        await browser.close();
+        await page.goto('https://blackhatworld.com');
     }
 )();

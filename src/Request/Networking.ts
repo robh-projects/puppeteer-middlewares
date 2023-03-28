@@ -53,7 +53,7 @@ export class HTTPNetworking {
         const headers: any = {
             ...request.headers(),
             //TODO: Shall we remove this?
-            "host": new URL(request.url()).host
+            //"host": new URL(request.url()).host
         }
 
         // Set "accept" header if not already set or undefined
@@ -62,14 +62,14 @@ export class HTTPNetworking {
 
         //"accept-encoding": "gzip, deflate, br",
 
-        if (request.isNavigationRequest()) {
-            headers["sec-fetch-mode"] = "navigate";
-            headers["sec-fetch-site"] = "none";
-            headers["sec-fetch-user"] = "?1";
-        } else {
-            headers["sec-fetch-mode"] = "no-cors";
-            headers["sec-fetch-site"] = "same-origin";
-        }
+        // if (request.isNavigationRequest()) {
+        //     headers["sec-fetch-mode"] = "navigate";
+        //     headers["sec-fetch-site"] = "none";
+        //     headers["sec-fetch-user"] = "?1";
+        // } else {
+        //     headers["sec-fetch-mode"] = "no-cors";
+        //     headers["sec-fetch-site"] = "same-origin";
+        // }
         return headers;
     }
 
@@ -116,7 +116,7 @@ export class HTTPNetworking {
     public defaultOptions = async (): Promise<Partial<TRequestOptions>> => {
         return {
             maxRedirects: 15,
-            maxRetries: 1,
+            maxRetries: 2,
             throwHttpErrors: false,
             ignoreInvalidCookies: true,
             followRedirect: false,

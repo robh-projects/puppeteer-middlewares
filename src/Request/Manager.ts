@@ -7,6 +7,7 @@ import { HTTPEvent } from "./Event";
 import { HTTPNetworking } from "./Networking";
 import { HTTPEventHandleProvider } from "./Event/Handler/Provider";
 import { HTTPRuleManager } from "./Rule/Manager";
+import { HTTP_EVENT_HANDLE } from "./Event/types";
 /**
  * A manager that handles Puppetter requests through middlewares
  */
@@ -47,8 +48,9 @@ export class HTTPRequestManager{
         
         const handler = new HTTPEventHandleProvider(event);
         // Consume event handles
+
         for await (const handle of handler.generator()){
-            this.EventHandler.handle(handle,event);
+            await this.EventHandler.handle(handle,event);
         }
 
         RulesManager.release(event);

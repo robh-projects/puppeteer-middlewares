@@ -82,7 +82,7 @@ export class HTTPEventHandler{
 
 
     public handle = async (handle: HTTP_EVENT_HANDLE, event: HTTPEvent) : Promise<void> => {      
-        console.log(`[RequestMiddleware] ${handle} ${event.URL}`);
+        //console.debug(`[RequestMiddleware] ${handle} ${event.URL}`);
         //@ts-ignore
         await this.HANDLE_MAPPINGS[handle](event);
         
